@@ -1,0 +1,2 @@
+ninja: Entering directory `C:\cloud-vision-master\android\CloudVision\app\.cxx\Debug\293tj5j6\x86'
+ninja: no work to do.

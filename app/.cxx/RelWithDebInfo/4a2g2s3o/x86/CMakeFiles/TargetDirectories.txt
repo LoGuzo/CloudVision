@@ -1,0 +1,3 @@
+C:/cloud-vision-master/android/CloudVision/app/.cxx/RelWithDebInfo/4a2g2s3o/x86/CMakeFiles/cloudvision.dir
+C:/cloud-vision-master/android/CloudVision/app/.cxx/RelWithDebInfo/4a2g2s3o/x86/CMakeFiles/edit_cache.dir
+C:/cloud-vision-master/android/CloudVision/app/.cxx/RelWithDebInfo/4a2g2s3o/x86/CMakeFiles/rebuild_cache.dir

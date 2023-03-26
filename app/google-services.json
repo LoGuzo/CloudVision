@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "836682949756",
+    "firebase_url": "https://traker-1651e-default-rtdb.firebaseio.com",
+    "project_id": "traker-1651e",
+    "storage_bucket": "traker-1651e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836682949756:android:0eb9e837bd207989a195f9",
+        "android_client_info": {
+          "package_name": "com.google.sample.cloudvision"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836682949756-e2v55p5h4mk22mstmgd55ud3u19768if.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9T55bCt45NvbFBKh5sDJepKXre3q1eEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836682949756-e2v55p5h4mk22mstmgd55ud3u19768if.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+Executable : C:\Users\whcks\AppData\Local\Android\Sdk\cmake\3.18.1\bin\ninja.exe
+arguments : 
+-C
+C:\cloud-vision-master\android\CloudVision\app\.cxx\Debug\293tj5j6\x86
+cloudvision
+jvmArgs : 
+

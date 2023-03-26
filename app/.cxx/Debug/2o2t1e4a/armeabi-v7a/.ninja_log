@@ -1,0 +1,22 @@
+# ninja log v5
+1	99	691614523	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	365b248754754269
+99	200	691614523	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/armeabi-v7a/libcloudvision.so	8f97e70a7acc21ec
+0	12	0	clean	14e8403abf1631e5
+0	9	0	clean	14e8403abf1631e5
+1	101	697544394	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	365b248754754269
+101	299	697544394	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/armeabi-v7a/libcloudvision.so	8f97e70a7acc21ec
+0	11	0	clean	14e8403abf1631e5
+0	9	0	clean	14e8403abf1631e5
+1	134	697544537	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	365b248754754269
+134	310	697544537	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/armeabi-v7a/libcloudvision.so	8f97e70a7acc21ec
+0	9	0	clean	14e8403abf1631e5
+0	10	0	clean	14e8403abf1631e5
+1	130	700757592	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	365b248754754269
+130	750	700757593	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/armeabi-v7a/libcloudvision.so	8f97e70a7acc21ec
+0	11	0	clean	14e8403abf1631e5
+0	11	0	clean	14e8403abf1631e5
+0	63	700763696	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	365b248754754269
+63	142	700763696	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/armeabi-v7a/libcloudvision.so	8f97e70a7acc21ec
+0	8	0	clean	14e8403abf1631e5
+0	63	700763720	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	365b248754754269
+64	131	700763720	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/armeabi-v7a/libcloudvision.so	8f97e70a7acc21ec
