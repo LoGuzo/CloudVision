@@ -36,6 +36,9 @@
         <activity
             android:name=".login.RegisterActivity"
             android:exported="true"/>
+        <activity android:name=".activity.Gift_Inform"
+            android:parentActivityName=".MainActivity"
+            android:exported="true"/>
         <meta-data
             android:name="android.app.lib_name"
             android:value="" />

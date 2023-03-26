@@ -32,7 +32,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.sample.cloudvision.MainActivity;
 import com.google.sample.cloudvision.R;
+import com.google.sample.cloudvision.activity.Gift_Inform;
+import com.google.sample.cloudvision.activity.SubActivity;
 import com.google.sample.cloudvision.decorator.EventDecorator;
+import com.google.sample.cloudvision.fragment.GalleryFragment;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.ArrayList;
@@ -72,6 +75,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
         holder.tv_st.setText(arrayList.get(position).getStore());
         holder.tv_na.setText(arrayList.get(position).getGiftName());
         holder.tv_dt.setText(arrayList.get(position).getDate());
+        holder.listCard.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent= new Intent(v.getContext(), Gift_Inform.class);
+                intent.putExtra("gift_inform",arrayList.get(position));
+                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                v.getContext().startActivity(intent);
+                return true;
+            }
+        });
         holder.burn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
