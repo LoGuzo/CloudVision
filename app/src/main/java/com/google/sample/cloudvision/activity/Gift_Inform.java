@@ -37,6 +37,6 @@ public class Gift_Inform extends AppCompatActivity {
         store.setText(user.getStore());
         name.setText(user.getGiftName());
         date.setText(user.getDate());
-
     }
+
 }

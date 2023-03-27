@@ -1,2 +1,3 @@
 ninja: Entering directory `C:\cloud-vision-master\android\CloudVision\app\.cxx\Debug\2o2t1e4a\x86'
-ninja: no work to do.
+[1/2] Building CXX object CMakeFiles/cloudvision.dir/cloudvision.cpp.o
+[2/2] Linking CXX shared library C:\cloud-vision-master\android\CloudVision\app\build\intermediates\cxx\Debug\2o2t1e4a\obj\x86\libcloudvision.so

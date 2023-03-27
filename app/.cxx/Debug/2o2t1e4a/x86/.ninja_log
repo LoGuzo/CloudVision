@@ -27,3 +27,7 @@
 0	9	0	clean	14e8403abf1631e5
 1	126	700763720	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	701612935a114219
 126	285	700763720	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/x86/libcloudvision.so	9da8b97bdf7256d7
+1	11	0	clean	14e8403abf1631e5
+1	18	0	clean	14e8403abf1631e5
+1	106	701605744	CMakeFiles/cloudvision.dir/cloudvision.cpp.o	701612935a114219
+106	862	701605745	C:/cloud-vision-master/android/CloudVision/app/build/intermediates/cxx/Debug/2o2t1e4a/obj/x86/libcloudvision.so	9da8b97bdf7256d7
