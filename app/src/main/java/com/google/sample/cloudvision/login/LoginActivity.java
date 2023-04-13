@@ -155,7 +155,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-
+                                    Toast.makeText(getApplicationContext(),
+                                            error.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             });
                             updateUi(user);
