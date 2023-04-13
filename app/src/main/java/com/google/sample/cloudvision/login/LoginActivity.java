@@ -23,8 +23,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.sample.cloudvision.MainActivity;
 import com.google.sample.cloudvision.R;
 import com.google.sample.cloudvision.function.BitmapConverter;
@@ -132,9 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
 
                             Intent google = new Intent(getApplicationContext(), MainActivity.class);
-                            google.putExtra("이름", account.getDisplayName());
-                            google.putExtra("프로필 사진", String.valueOf(account.getPhotoUrl()));
-                            google.putExtra("이메일", account.getEmail());
 
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
                             UserAccount inform = new UserAccount();
@@ -142,7 +142,22 @@ public class LoginActivity extends AppCompatActivity {
                             inform.setEmailId(user.getEmail());
                             inform.setName(account.getDisplayName());
 
-                            mDatabaseReference.child("UserAccount").child(user.getUid()).setValue(inform);
+                            mDatabaseReference.child("UserAccount").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(!snapshot.exists()){
+                                        mDatabaseReference.child("UserAccount").child(user.getUid()).setValue(inform);
+                                    }
+                                    else{
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             updateUi(user);
                             startActivity(google);
                             finish();
