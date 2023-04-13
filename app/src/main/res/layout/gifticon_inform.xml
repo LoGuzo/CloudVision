@@ -45,7 +45,7 @@
                 android:background="@drawable/round_box"
                 android:id="@+id/BarcodeText"
                 android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="32px" />
 
@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/NameText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/round_box"
@@ -75,7 +75,7 @@
                 android:background="@drawable/round_box"
                 android:id="@+id/StoreText"
                 android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="32px"/>
 
@@ -90,7 +90,7 @@
                 android:background="@drawable/round_box"
                 android:layout_marginTop="5dp"
                 android:id="@+id/DateText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="32px"/>
 
