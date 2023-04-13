@@ -37,19 +37,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.sample.cloudvision.activity.SubActivity;
 import com.google.sample.cloudvision.fragment.Calendar;
 import com.google.sample.cloudvision.fragment.GalleryFragment;
 import com.google.sample.cloudvision.function.BitmapConverter;
 import com.google.sample.cloudvision.function.CheckPic;
 import com.google.sample.cloudvision.googleFunction.PermissionUtils;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.sample.cloudvision.login.LoginActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int GALLERY_PERMISSIONS_REQUEST = 0; // 갤러리 허가 요청 함수
     private static final int GALLERY_IMAGE_REQUEST = 1; // 갤러리에서 이미지 선택 요청 함수
     private static final String TAG = MainActivity.class.getSimpleName();
+    private FirebaseAuth firebaseAuth;
 
     private final String[] page_titles=new String[]{
             "기프티콘",
@@ -92,6 +92,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startGalleryChooser();
+            }
+        });
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        Button btn_logout = findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+
+                Intent login = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(login);
+                finish();
+
+                Toast.makeText(MainActivity.this, "로그아웃 되었습니다!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

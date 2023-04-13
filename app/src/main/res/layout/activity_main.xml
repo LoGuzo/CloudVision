@@ -13,6 +13,8 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <!-- 상단바 -->
+
+        <!-- 탭바 -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -32,11 +34,10 @@
                 android:id="@+id/btn_logout"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
-                android:text="로그아웃"
-                android:layout_gravity="bottom|right"/>
+                android:layout_gravity="bottom|right"
+                android:text="로그아웃" />
         </androidx.appcompat.widget.Toolbar>
 
-        <!-- 탭바 -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"

@@ -31,21 +31,68 @@
             <ImageView
                 android:id="@+id/gift_image"
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="620dp"
                 android:scaleType="fitCenter" />
 
             <TextView
-                android:id="@+id/StoreText"
+                android:id="@+id/tv_barcode"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="바코드" />
+
+            <TextView
+                android:background="@drawable/round_box"
+                android:id="@+id/BarcodeText"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="제품명" />
+
             <TextView
                 android:id="@+id/NameText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_box"
+                android:textSize="32px" />
+
             <TextView
+                android:id="@+id/tv_store"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="사용처" />
+
+            <TextView
+                android:background="@drawable/round_box"
+                android:id="@+id/StoreText"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="유효기간" />
+
+            <TextView
+                android:background="@drawable/round_box"
+                android:layout_marginTop="5dp"
                 android:id="@+id/DateText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="32px"/>
 
         </LinearLayout>
     </ScrollView>

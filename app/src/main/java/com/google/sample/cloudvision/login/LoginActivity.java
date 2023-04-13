@@ -60,8 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
         btn_google = findViewById(R.id.btn_google);
-
-        Button btn_login = findViewById(R.id.btn_login);
         btn_google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        Button btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                                 // 로그인 성공
                                 Intent main = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(main);
-                                finish(); // 로그인 액티비티 파괴
+
+                                Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(LoginActivity.this, "!!이메일과 비밀번호를 다시 입력해주세요!!", Toast.LENGTH_SHORT).show();
                             }

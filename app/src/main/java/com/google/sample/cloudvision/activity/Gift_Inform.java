@@ -27,6 +27,7 @@ public class Gift_Inform extends AppCompatActivity {
         User user=getIntent().getParcelableExtra("gift_inform");
 
         ImageView gifticon=findViewById(R.id.gift_image);
+        TextView barcode=findViewById(R.id.BarcodeText);
         TextView store=findViewById(R.id.StoreText);
         TextView name=findViewById(R.id.NameText);
         TextView date=findViewById(R.id.DateText);
@@ -34,6 +35,7 @@ public class Gift_Inform extends AppCompatActivity {
         Glide.with(this)
                 .load(user.getImgUrl())
                 .into(gifticon);
+        barcode.setText(user.getBarCode());
         store.setText(user.getStore());
         name.setText(user.getGiftName());
         date.setText(user.getDate());
