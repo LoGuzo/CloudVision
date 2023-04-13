@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="기프티콘 트래커"
+                android:fontFamily="@font/a"
                 android:textAppearance="@style/Base.TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
             <Button
@@ -35,6 +36,7 @@
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|right"
+                android:fontFamily="@font/a"
                 android:text="로그아웃" />
         </androidx.appcompat.widget.Toolbar>
 

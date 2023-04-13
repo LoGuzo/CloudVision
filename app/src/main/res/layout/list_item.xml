@@ -4,5 +4,6 @@
     android:layout_height="wrap_content"
     android:padding="20dp"
     android:text="textView"
+    android:fontFamily="@font/a"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"
     android:textStyle="bold"></TextView>
