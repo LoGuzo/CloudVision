@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // 로그인 성공
                                 Intent main = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(main);
-
+                                finish();
                                 Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(LoginActivity.this, "!!이메일과 비밀번호를 다시 입력해주세요!!", Toast.LENGTH_SHORT).show();

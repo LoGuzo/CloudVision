@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,17 +37,19 @@
 
             <TextView
                 android:id="@+id/tv_barcode"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="바코드" />
 
             <TextView
-                android:background="@drawable/round_box"
                 android:id="@+id/BarcodeText"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_box"
                 android:textSize="32px" />
 
             <TextView
@@ -54,45 +57,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="제품명" />
 
             <TextView
                 android:id="@+id/NameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/round_box"
                 android:textSize="32px" />
 
             <TextView
                 android:id="@+id/tv_store"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="사용처" />
 
             <TextView
-                android:background="@drawable/round_box"
                 android:id="@+id/StoreText"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="32px"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_box"
+                android:textSize="32px" />
 
             <TextView
                 android:id="@+id/tv_date"
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="유효기간" />
 
             <TextView
-                android:background="@drawable/round_box"
-                android:layout_marginTop="5dp"
                 android:id="@+id/DateText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="32px"/>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/round_box"
+                android:textSize="32px" />
 
         </LinearLayout>
     </ScrollView>
