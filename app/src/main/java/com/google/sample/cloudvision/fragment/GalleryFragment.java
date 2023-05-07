@@ -32,9 +32,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.sample.cloudvision.R;
 import com.google.sample.cloudvision.function.CustomAdapter;
+import com.google.sample.cloudvision.function.ItemClickListener;
+import com.google.sample.cloudvision.function.OnDataPassListener;
 import com.google.sample.cloudvision.function.User;
 
 import java.util.ArrayList;
+
+import kotlinx.coroutines.SchedulerTaskKt;
 
 // 등록된 기프티콘 목록
 public class GalleryFragment extends Fragment{
@@ -44,10 +48,23 @@ public class GalleryFragment extends Fragment{
     FragmentManager fragmentManager;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<User> arrayList= new ArrayList<>();
+    private ArrayList<User> alarmList= new ArrayList<>();
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
+    ItemClickListener itemClickListener;
+    OnDataPassListener onDataPassListener;
+    private String exBarcode;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onDataPassListener = (OnDataPassListener)context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+"must implement SendEventListener");
+        }
+    }
 
     public void onViewCreated(@NonNull View view,@Nullable Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
@@ -59,7 +76,18 @@ public class GalleryFragment extends Fragment{
         View view=inflater.inflate(R.layout.recycler,container,false);
         recyclerView = view.findViewById(R.id.recyclerView); // 아이디 연결
         recyclerView.setHasFixedSize(true); // 기존 성능 강화
-
+        itemClickListener = new ItemClickListener() {
+            @Override
+            public void onClick(String s) {
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                onDataPassListener.sendM(s);
+            }
+        };
         initData();
         return view;
 
@@ -79,9 +107,21 @@ public class GalleryFragment extends Fragment{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // 파이어베이스 데이터베이스 데이터 받기
                 arrayList.clear(); // 기존 배열 초기화
+                alarmList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){ // 반복문 List 추출
                     User user=snapshot.getValue(User.class); // 만들어 뒀던 User객체 받기
+                    if(user.getChkRd()){
+                        CustomAdapter.setEx(user.getBarCode());
+                    }
+                    if(!user.getChkAr()){
+                        alarmList.add(user);
+                        databaseReference.child(user.getBarCode()).child("chkAr").setValue(true);
+                    }
                     arrayList.add(user); // 담은 데이터 배열리스트에 저장, 리사이클러뷰로 전송 준비
+                }
+                if(!alarmList.isEmpty()){
+                    Log.d("chk1", String.valueOf(alarmList.size()));
+                    onDataPassListener.sendAl(alarmList);
                 }
                 adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침
             }
@@ -92,11 +132,9 @@ public class GalleryFragment extends Fragment{
                 Log.e("GiftTraker",String.valueOf(error.toException())); // 에러 출력
             }
         });
-
         bundle.putParcelableArrayList("bundleKey",arrayList);
         getParentFragmentManager().setFragmentResult("requsetKey",bundle);
-        //arrayList.add(new User("치킨","123456","BBQ","2019.03.01","https://firebasestorage.googleapis.com/v0/b/traker-1651e.appspot.com/o/GiftImg%2F'%EA%B5%BD%EB%84%A4%20%ED%99%94%EC%82%B0%20%EC%84%B8%ED%8A%B8%22%EC%98%A4%EB%A6%AC%EC%A7%80%EB%84%90%2B%EB%AA%B0%EC%BC%80.png?alt=media&token=9ddab5f5-fb27-4101-873c-9b9301b86809"));
-        adapter = new CustomAdapter(getContext(),arrayList);
+        adapter = new CustomAdapter(getContext(),arrayList,itemClickListener);
         layoutManager =new GridLayoutManager(getActivity(),1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결결

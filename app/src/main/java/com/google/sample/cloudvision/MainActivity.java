@@ -17,11 +17,17 @@
 package com.google.sample.cloudvision;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
@@ -43,25 +49,40 @@ import android.widget.Toast;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.sample.cloudvision.activity.SubActivity;
+import com.google.sample.cloudvision.alarmFunction.AlarmReceiver;
 import com.google.sample.cloudvision.fragment.Calendar;
 import com.google.sample.cloudvision.fragment.GalleryFragment;
+import com.google.sample.cloudvision.function.AdditionalFunction;
 import com.google.sample.cloudvision.function.BitmapConverter;
 import com.google.sample.cloudvision.function.CheckPic;
+import com.google.sample.cloudvision.function.CustomAdapter;
+import com.google.sample.cloudvision.function.OnDataPassListener;
+import com.google.sample.cloudvision.function.User;
 import com.google.sample.cloudvision.googleFunction.PermissionUtils;
 import com.google.sample.cloudvision.login.LoginActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnDataPassListener {
     private ViewPager viewPager;
     TabLayout tabs;
+    static long diff;
+    private View v;
+    private ArrayList<User> alarmL=new ArrayList<>();
     private static final int GALLERY_PERMISSIONS_REQUEST = 0; // 갤러리 허가 요청 함수
     private static final int GALLERY_IMAGE_REQUEST = 1; // 갤러리에서 이미지 선택 요청 함수
     private static final String TAG = MainActivity.class.getSimpleName();
     private FirebaseAuth firebaseAuth;
-
+    private AlarmManager alarmManager;
+    private NotificationManager notificationManager;
+    private String sBell;
     private final String[] page_titles=new String[]{
             "기프티콘",
             "캘린더"
@@ -70,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             new GalleryFragment(),
             new Calendar()
     };
+
+
 
     // 안스와 openCV연동
     static{
@@ -81,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         viewPager=findViewById(R.id.viewPager);
         viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager()));
         tabs=findViewById(R.id.tabs);
@@ -94,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 startGalleryChooser();
             }
         });
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         Button btn_logout = findViewById(R.id.btn_logout);
@@ -187,6 +210,25 @@ public class MainActivity extends AppCompatActivity {
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, true);
     }
 
+    @Override
+    public void sendM(String s) {
+        sBell = s;
+    }
+
+    @Override
+    public void sendAl(ArrayList<User> a) {
+        alarmL=a;
+        if(!alarmL.isEmpty()){
+            for(User i:alarmL){
+                String b=AdditionalFunction.dateSet(i.getDate());
+                String s=i.getBarCode().replace(" ","");
+                Long l=Long.parseLong(s);
+                receiveAlarm(b,l.intValue());
+            }
+        }
+    }
+
+
     public class TabPagerAdapter extends FragmentPagerAdapter {
         @Nullable
         @Override
@@ -209,5 +251,46 @@ public class MainActivity extends AppCompatActivity {
             return page_titles.length;
         }
 
+    }
+
+    public void receiveAlarm(String i,int a) {
+        setAlarm(i,a);
+    }
+
+    /*public long CalData(String s){
+        try {
+            SimpleDateFormat dataSet1 = new SimpleDateFormat("yyyy.MM.dd");
+            String date = dataSet1.format(new Date());
+            Date startDate = dataSet1.parse(date);
+            Date endDate = dataSet1.parse(AdditionalFunction.dateSet(s));
+
+            diff = endDate.getTime() - startDate.getTime();
+            diff = (diff/(24*60*60*1000) + 1);
+
+        }
+        catch(ParseException e){
+            e.printStackTrace();
+        }
+
+        return diff;
+
+    }*/
+
+    private void setAlarm(String i,int a) {
+        Intent receiverIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
+                    a, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        }else {
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this,
+                    a, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+        String[] chkDate1=i.split("\\.");
+        java.util.Calendar calendar = new GregorianCalendar(Integer.parseInt(chkDate1[0]),Integer.parseInt(chkDate1[1])-1,Integer.parseInt(chkDate1[2]),9,0,0);
+        calendar.add(java.util.Calendar.DATE,-7);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }
