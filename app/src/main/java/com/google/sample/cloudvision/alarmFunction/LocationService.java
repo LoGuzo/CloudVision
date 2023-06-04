@@ -50,8 +50,6 @@ public class LocationService extends Service {
 
 
     final int REFERENCEDISTANCE = 500; //알람 받을 반경
-    private GregorianCalendar mCalender;
-    static long diff;
     static double cx = 126.9071288; //초기 경도
     static double cy = 37.5154133; //초기 위도
     static float distanceResult;

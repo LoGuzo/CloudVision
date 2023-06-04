@@ -65,9 +65,36 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:src="@android:drawable/ic_menu_gallery"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="70dp"/>
+    <Button
+        android:id="@+id/buttonStartLocationUpdates"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:onClick="onClickStart"
+        android:layout_gravity="bottom"
+        android:text="위치 탐색 시작"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="16dp"/>
+    <Button
+        android:id="@+id/buttonStopLocationUpdates"
+        android:layout_width="165dp"
+        android:layout_height="wrap_content"
+        android:onClick="onClickStop"
+        android:layout_gravity="bottom|right"
+        android:text="위치 탐색 중지"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="16dp"/>
 
-
+    <Button
+        android:id="@+id/StoreLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="bottom"
+        android:onClick="findNearbyStores"
+        android:layout_marginLeft="160dp"
+        android:layout_marginBottom="70dp"
+        android:text="상점 찾기" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

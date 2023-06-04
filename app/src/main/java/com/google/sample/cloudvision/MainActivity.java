@@ -17,15 +17,18 @@
 package com.google.sample.cloudvision;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +39,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -50,6 +55,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.sample.cloudvision.activity.SubActivity;
 import com.google.sample.cloudvision.alarmFunction.AlarmReceiver;
+import com.google.sample.cloudvision.alarmFunction.Constants;
+import com.google.sample.cloudvision.alarmFunction.LocationService;
 import com.google.sample.cloudvision.fragment.Calendar;
 import com.google.sample.cloudvision.fragment.GalleryFragment;
 import com.google.sample.cloudvision.function.AdditionalFunction;
@@ -68,21 +75,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity implements OnDataPassListener {
     private ViewPager viewPager;
     TabLayout tabs;
-    static long diff;
-    private View v;
+    String lat, lon;
     private ArrayList<User> alarmL=new ArrayList<>();
     private static final int GALLERY_PERMISSIONS_REQUEST = 0; // 갤러리 허가 요청 함수
     private static final int GALLERY_IMAGE_REQUEST = 1; // 갤러리에서 이미지 선택 요청 함수
+    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1; // 위치 알림
     private static final String TAG = MainActivity.class.getSimpleName();
     private FirebaseAuth firebaseAuth;
     private AlarmManager alarmManager;
     private NotificationManager notificationManager;
-    private String sBell;
+    private String st="";
+    Button btn_start;
+    Button btn_stop;
+    Button btn_loc;
     private final String[] page_titles=new String[]{
             "기프티콘",
             "캘린더"
@@ -91,8 +102,6 @@ public class MainActivity extends AppCompatActivity implements OnDataPassListene
             new GalleryFragment(),
             new Calendar()
     };
-
-
 
     // 안스와 openCV연동
     static{
@@ -133,6 +142,17 @@ public class MainActivity extends AppCompatActivity implements OnDataPassListene
                 Toast.makeText(MainActivity.this, "로그아웃 되었습니다!!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btn_start=findViewById(R.id.buttonStartLocationUpdates);
+        btn_stop=findViewById(R.id.buttonStopLocationUpdates);
+        if(Objects.equals(st, "")){
+            btn_start.setEnabled(false);
+            btn_stop.setEnabled(false);
+        }
+        else{
+            btn_start.setEnabled(true);
+            btn_stop.setEnabled(true);
+        }
     }
     // 갤러리 띄우기
     public void startGalleryChooser() {
@@ -161,6 +181,14 @@ public class MainActivity extends AppCompatActivity implements OnDataPassListene
         if (requestCode == GALLERY_PERMISSIONS_REQUEST) {
             if (PermissionUtils.permissionGranted(requestCode, GALLERY_PERMISSIONS_REQUEST, grantResults)) {
                 startGalleryChooser();
+            }
+        }
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "onRequestPermissionsResult: Chk");
+                startLocationService();
+            } else {
+                //Toast.makeText(this, "Permission denied!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -212,7 +240,15 @@ public class MainActivity extends AppCompatActivity implements OnDataPassListene
 
     @Override
     public void sendM(String s) {
-        sBell = s;
+        st = s;
+        if(Objects.equals(st, "")){
+            btn_start.setEnabled(false);
+            btn_stop.setEnabled(false);
+        }
+        else{
+            btn_start.setEnabled(true);
+            btn_stop.setEnabled(true);
+        }
     }
 
     @Override
@@ -293,4 +329,65 @@ public class MainActivity extends AppCompatActivity implements OnDataPassListene
         calendar.add(java.util.Calendar.DATE,-7);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
+
+    public void onClickStart(View v) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION_PERMISSION);
+        } else {
+            Log.d(TAG, "Start");
+            startLocationService();
+        }
+    }
+
+    public void onClickStop(View v) {
+        stopLocationService();
+    }
+
+    private boolean isLocationServiceRunning() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)) {
+                if (LocationService.class.getName().equals(service.service.getClassName())) {
+                    if (service.foreground) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    private void startLocationService() {
+        if (!isLocationServiceRunning()) {
+            Intent intent = new Intent(getApplicationContext(), LocationService.class);
+            intent.setAction(Constants.START_SERVICE);
+            intent.putExtra("placeTitle", st);
+            startService(intent);
+        }
+    }
+
+    private void stopLocationService() {
+        if (isLocationServiceRunning()) {
+            Intent intent = new Intent(getApplicationContext(), LocationService.class);
+            intent.setAction(Constants.STOP_SERVICE);
+            startService(intent);
+        }
+    }
+
+    public void findNearbyStores(View v){
+        if(Constants.nearestStore != null){
+            String currentPlace = Constants.nearestStore;
+            String position = "geo:" + lat +","+ lon + "?z=20&q=" + currentPlace;
+            Uri gmmIntentUri = Uri.parse(position);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        }
+        else{
+            Toast.makeText(this, "검색중입니다. 잠시 후에 시도해주십시오.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

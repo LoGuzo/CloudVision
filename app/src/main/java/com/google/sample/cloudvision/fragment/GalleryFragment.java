@@ -1,6 +1,10 @@
 package com.google.sample.cloudvision.fragment;
 
+import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -31,6 +37,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.sample.cloudvision.R;
+import com.google.sample.cloudvision.alarmFunction.Constants;
+import com.google.sample.cloudvision.alarmFunction.LocationService;
 import com.google.sample.cloudvision.function.CustomAdapter;
 import com.google.sample.cloudvision.function.ItemClickListener;
 import com.google.sample.cloudvision.function.OnDataPassListener;
@@ -55,7 +63,7 @@ public class GalleryFragment extends Fragment{
     FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
     ItemClickListener itemClickListener;
     OnDataPassListener onDataPassListener;
-    private String exBarcode;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -112,6 +120,7 @@ public class GalleryFragment extends Fragment{
                     User user=snapshot.getValue(User.class); // 만들어 뒀던 User객체 받기
                     if(user.getChkRd()){
                         CustomAdapter.setEx(user.getBarCode());
+                        onDataPassListener.sendM(user.getStore());
                     }
                     if(!user.getChkAr()){
                         alarmList.add(user);
@@ -139,5 +148,4 @@ public class GalleryFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결결
     }
-
 }
