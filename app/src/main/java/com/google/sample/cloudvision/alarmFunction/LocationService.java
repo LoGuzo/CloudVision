@@ -227,8 +227,8 @@ public class LocationService extends Service {
 
     public Vector<String> data(double cx, double cy, String indsLclsCd) throws IOException, JSONException{
 
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInRadius"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=ll3gVQiF4hDO3071xqUFnsbtaIxxRio626WMJelDnrjNZB7geUgbP3Ku%2FMx0n%2B%2FVEFJhtJS67ncoDMaGSn16lg%3D%3D"); /*Service Key*/
+        StringBuilder urlBuilder = new StringBuilder("URL"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "Service Key"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("radius", "UTF-8") + "=" + URLEncoder.encode("500", "UTF-8")); /* 반경입력, (미터단위, 최대2000 미터)*/
